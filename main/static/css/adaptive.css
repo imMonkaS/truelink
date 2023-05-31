@@ -1,0 +1,110 @@
+@media screen and (max-width: 1048px) {
+  body {
+    overflow-x: scroll;
+  }
+
+}
+
+@media screen and (max-width: 768px){
+    .sidebar{
+        display: none;
+    }
+    body{
+        zoom: 40%;
+        -moz-zoom: 40%;
+        -webkit-zoom: 40%;
+        /*overflow: hidden;*/
+    }
+    .header{
+        position: fixed;
+        top: 0;
+        height: 100px;
+    }
+    #chort{
+        zoom: 150%;
+        margin-left: -60px;
+    }
+    .group-header{
+        margin-left: 41px !important;
+        zoom: 150%;
+    }
+    .main-container-block{
+        margin-top: 100px;
+    }
+    .user-wall{
+        height: 200vh;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+    /*
+    .main-container-block::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .main-container-block::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+    }*/
+
+    .landing-page-forms{
+        margin: 120px auto 0 auto !important;
+        zoom: 150%;
+    }
+
+    #menu{
+        overflow: hidden;
+        width: 100%;
+        height: 100px;
+        margin-left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .c-hamburger{
+        display: none;
+    }
+    #menu span{
+        display: none;
+    }
+    .main-menu-ul{
+        display: none !important;
+    }
+    .settings{
+        display: none;
+    }
+    .intuitive-menu{
+        display: flex !important;
+        flex-direction: row;
+        zoom: 150%;
+        width: 280px;
+    }
+    .theme-switch-wrapper{
+        bottom: 20px !important;
+        right: 58.5px !important;
+        zoom: 150%;
+    }
+    .main-group-content-friends, .gallery-section{
+        width: 120% !important;
+        zoom: 150%;
+    }
+    .int-settings{
+        zoom: 150%;
+    }
+    .spa_l{
+        margin-left: 70px;
+    }
+}
+
+@media screen and (min-width: 1240px){
+    #menu{
+        top:0;
+    }
+    .intuitive-menu{
+        position: absolute;
+        top: 55px;
+        left: 165px;
+    }
+    .spa_l{
+        margin-left: 15px;
+    }
+}

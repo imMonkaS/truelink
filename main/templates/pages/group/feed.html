@@ -1,0 +1,57 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/group_solo.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="main-content-section flex flex-dir-c al-items-c text-center">
+            {% if posts|length == 0 %}
+            <div class = "post-info-none"><span class ="text-default">Новостей пока нет.</span></div>
+            {% endif %}
+
+            {% include 'static_templates/posts_loader.html' %}
+
+        </section>
+        <div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+                <div class="sidebar pos-abs radius">
+                    <span class = "flex al-items-c show-all-groups"><a class = "text-default" href="/id{{user.id}}/groups/">Посмотреть все группы</a></span>
+                    {% if groups|length != 0 %}
+                    <div class="side-list-group">
+                        {% for gr in groups %}
+                        <div class="side-item">
+                            <div class = "flex al-items-c">
+                                <a href="/groups/{{gr.id}}">
+                                    <div class="post-author-icon img-small special-post-icon" style="background-image: url({{gr.link_to_img}})"></div>
+                                </a>
+                                <a href="/groups/{{gr.id}}" class = "text-default invite-name">
+                                    <span>
+                                        <span>{{gr.name}}</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-default" style="margin: 15px 0 15px 0">
+                        У вас пока нет групп
+                    </div>
+                    {% endif %}
+                </div>
+            </aside>
+        </div>
+        {% include 'static_templates/btn-up.html' %}
+    </div>
+</main>
+<script src = "/static/js/show_all.js"></script>
+<script src="/static/js/like.js"> </script>
+
+{% include 'static_templates/footer.html' %}

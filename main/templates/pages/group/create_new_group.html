@@ -1,0 +1,56 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/profile_edit.css">
+<link rel="stylesheet" href="/static/css/chats_style.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="chat-content-section flex flex-dir-c al-items-c">
+			<div class="blockSettings">
+				<div class="settingMenu radius">
+					<div class="settHead text-default">
+						<span>Создание группы</span>
+					</div>
+					<div class="settMain">
+                      <form method="post">
+                          {% csrf_token %}
+                        <div class="option-field">
+                            <span class="text-default">Введите название группы:</span>
+                            <input style = "height: 28px;" name="group_name" required class = "editValue radius" type="text" placeholder = "">
+                        </div>
+                        <div class="option-field">
+                          <span class="text-default">Группа:</span>
+                          <div class = "flex flex-dir-c">
+                              <label>
+                              <input type="checkbox" class="hidden" id="input1" name="closed">
+                              <label class="entry" for="input1">
+                                  <div class="circle"></div>
+                                  <div class="entry-label text-default">Закрытая</div>
+                              </label>
+                              </label>
+                          </div>
+					    </div>
+
+                        <div>
+                          <button class = "sbm-btn text-default radius" type="submit">Создать</button>
+                        </div>
+                      </form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="right-content">
+			<aside class="flex flex-dir-c al-items-c text-center">
+			</aside>
+		</div>
+    </div>
+</main>
+
+{% include 'static_templates/footer.html' %}

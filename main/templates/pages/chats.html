@@ -1,0 +1,199 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/chats_style.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="chat-content-section flex flex-dir-c al-items-c">
+<!--            <div class="search text-default radius">-->
+<!--                <div class="search-icon">-->
+<!--                    <img src="/static/images/icons/search.svg">-->
+<!--                </div>-->
+<!--                <form action="handler.php">-->
+<!--                    <input class="search-field text-default" type="search" placeholder="Поиск...">-->
+<!--                </form>-->
+<!--            </div>-->
+            {% if not chats_exist %}
+            <div class = "post-info-none"><span class ="text-default">Сообщений пока нет.</span></div>
+            {% endif %}
+            {% if chats_exist %}
+            <div class="message-group">
+                <div class="mess-sub-group">
+                    <div class="listAllMessages">
+                        {% for single_user in left_users %}
+                        <div class="divMessages">
+                            <a href = "/messager?u={{single_user.user_with.id}}">
+                                <span class="allNamePeople text-default">{{single_user.user_with.first_name}} {% if single_user.user_with.profile.last_name_visible %} {{single_user.user_with.last_name}} {% endif %}</span>
+                                <span class="allMessPeople text-default">{{single_user.show_message}}</span>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if chat_chosen %}
+                    <div class = "flex flex-dir-c">
+                        <div class="message-card flex al-items-c">
+                            <a href="/id{{user_with.id}}">
+                                <div class="message-car-img img-small" style="background-image: url({{user_with.profile.pfp_link}})"></div>
+                            </a>
+                            <span class = "flex flex-dir-c">
+                                <a class="text-default message-card-link button-cursor" href="/id{{user_with.id}}">
+                                    <span>{{user_with.first_name}} {% if user_with.profile.last_name_visible %} {{user_with.last_name}} {% endif %}</span>
+                                </a>
+                                <span class="text-default message-card-link">online (doesn't work)</span>
+                            </span>
+                            <a href="/messager/black_list?u={{user_with.id}}" style="right: 20px" class="text-default button-cursor pos-abs"> {% if user_with.id|slugify in user.profile.black_list %} Убрать из ЧС {% else %} Добавить в ЧС {% endif %}</a>
+                        </div>
+                        <div class="message">
+                            <div class="messagesSends" id="messages_block">
+                                {% for message in messages %}
+                                <div class="group-of-mess">
+                                    <a href="/id{{message.sender.id}}" class = "user-img">
+                                        <div class="user-imge img-small" style="background-image: url({{message.sender.profile.pfp_link}})">
+                                        </div>
+                                    </a>
+
+                                    <div class="peopleMes text-default">
+                                        <div class="message-user-type">
+                                            <a class="text-default" href="/id{{message.sender.id}}"> <h4 class="namePeople text-default">{{message.sender.first_name}} {% if message.sender.profile.last_name_visible %} {{message.sender.last_name}} {% endif %}</h4> </a> <span class="timeMess text-default">{{message.datetime}}</span>
+                                        </div>
+                                        <p class="messageSend text-default" style="margin-top: -15px">{{message.message}}</p>
+                                    </div>
+                                    {% if user.id == message.sender.id %}
+                                    <a href="/delete_message/?message_id={{message.id}}"><span class="close" id="{{message.id}}"></span></a>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sendMessInput">
+                    {% if user_with.id|slugify not in user.profile.black_list and user.id|slugify not in user_with.profile.black_list %}
+                    <form method="post" id="send_message_form">
+                        {% csrf_token %}
+                        <textarea name="message" maxlength="2000" id="message_ta" class="chat-message-ta post-message-ta" placeholder="Сообщение..." wrap = "hard" cols="15"> </textarea>
+                        <span id="charCount" class = "text-default"></span>
+                        <button class="send-btn" id="sbm_btn" type="submit">
+                            <i class="material-icons">send</i>
+                        </button>
+                    </form>
+                    {% elif user.id|slugify in user_with.profile.black_list %}
+                    <div>
+                        <span class="text-default"> Этот пользователь добавил вас в ЧС </span>
+                    </div>
+                    {% else %}
+                    <div>
+                        <span class="text-default"> Этот пользователь у вас в ЧС </span>
+                    </div>
+                    {% endif %}
+                {% else %}
+                <div class="message radius">
+                    <p style="text-align: center; position: relative; vertical-align: middle;" class="text-default"> Выберите чат </p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </section>
+        <div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+                <div class="sidebar pos-abs" style = "display: none;">
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<script>
+
+    let chat_ta = document.querySelector('.chat-message-ta');
+    let chat_send_btn = document.querySelector('.send-btn');
+    chat_ta.value = '';
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+
+    setInterval(onTimerTick, 33);
+    let tmp_message = -1;
+
+    function onTimerTick() {
+        $.ajax({
+            type: 'POST',
+            url: '/get_messages/',
+            mode: 'same-origin',
+            headers: {'X-CSRFToken': csrftoken},
+            success: function(response) {
+                let last_message = response['message']
+                if (tmp_message == -1){
+                    tmp_message = last_message['id']
+                }
+                if (last_message['id'] != tmp_message){
+                    if ({{user_with.id}} == last_message['sender_id'] && {{user.id}} == last_message['receiver_id'] || {{user_with.id}} == last_message['receiver_id']          && {{user.id}} == last_message['sender_id']){
+                        tmp_message = last_message['id']
+                        $("#messages_block").append(`
+                        <div class="group-of-mess">
+                            <div class="user-img img-small" style="background-image: url(${last_message['pfp_link']})">
+                            </div>
+
+                            <div class="peopleMes text-default">
+                                <div class="message-user-type">
+                                    <a class="text-default""> <h4 class="namePeople text-default">${last_message['sender_first_name']} ${last_message['sender_last_name']}</h4> </a> <span class="timeMess text-default">${last_message['datetime']}</span>
+                                </div>
+                                <p class="messageSend text-default" style="margin-top: -15px">${last_message['message']}</p>
+                            </div>
+                            <a href="/delete_message/?message_id=${last_message['id']}"><span class="close" id="${last_message['id']}"></span></a>
+                        </div>
+                        `)
+                        document.querySelector('.messagesSends').scrollTo(0, 9999);
+                    }
+                }
+            }
+        });
+    }
+
+    sbm_btn.onclick = function(e){
+        e.preventDefault()
+        var form = $("#send_message_form").serialize();
+        $.ajax({
+            type: "POST",
+            url: "/messager/?u={{user_with.id}}",
+            data: form,
+            success: function(html){
+                message_ta.value='';
+            }
+        });
+    }
+
+    document.querySelector('.messagesSends').scrollTo(0, 9999);
+    
+
+
+</script>
+<script src = "/static/js/change_btn_state.js"></script>
+<script src = "/static/js/chat_hotkeys.js"></script>
+<script src = "/static/js/show_sbm_btn.js"></script>
+<script src = "/static/js/del_msg_close.js"></script>
+<script src = "/static/js/counter_2000limit.js"></script>
+
+{% include 'static_templates/footer.html' %}

@@ -1,0 +1,128 @@
+.content-article{
+     background-image: none;
+     align-items: flex-start;
+}
+
+.group-icon-def{
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.groupPostMenu {
+    height: 50px;
+	margin: 5px 0 0px 0;
+	border-top: 2px solid var(--borders);
+}
+
+.groupHead {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    border: 2px solid var(--borders);
+	width: 90%;
+	height: 100px;
+	background-color: var(--menu-windows);
+	margin-top: 8px;
+}
+
+.text-show-group{
+    overflow: auto;
+	overflow-y: hidden;
+	white-space: inherit;
+	text-align: left;
+}
+
+.box p{
+    display: -webkit-box;
+    overflow: hidden;
+    max-width: 580px;
+    overflow-wrap: anywhere;
+}
+
+.box {
+  align-items: flex-start;
+  height:auto !important;
+}
+
+.box label{
+    margin-bottom: 5px;
+    color: var(--font-color);
+    font-size: 14px;
+    cursor: pointer;
+    transition: .3s;
+    font-weight: 900;
+}
+
+.box label:hover{
+    color: #3376F6;
+}
+
+.groupHeadImg {
+	width: 80px;
+    height: 80px;
+    margin: 8px;
+}
+
+.groupHeadDivSub{
+    padding: 5px;
+	background-color: var(--btn-elems);
+	border: 2px solid var(--borders);
+	cursor: pointer;
+	transition: .3s;
+}
+
+.groupHeadDivSub:hover{
+    border: 2px solid #3376F6;
+    background-color: rgba(25, 35, 53, 0.7);
+}
+
+.height-edit{
+    height: auto !important;
+}
+
+.settings-group{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.settings-group:hover{
+    filter: invert(53%) sepia(50%) saturate(7498%) hue-rotate(208deg) brightness(100%) contrast(94%);
+    animation: bumble 0.75s;
+}
+.change-photo-user{
+    width: 120px;
+    height: 15px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+.ss{
+    transition: .3s;
+}
+.change-photo-user input{
+    width: 120px;
+    height: 15px;
+    opacity: 0;
+}
+#pfp_form:hover .ss{
+    color: #3376F6;
+}
+
+.change-photo-user input, .change-photo-user input::-webkit-file-upload-button {
+    cursor: pointer;
+}
+
+.change-photo-user span{
+    position: absolute;
+    font-size: 11px;
+    top: 0px;
+    left: 0px;
+}
+
+.change-photo-user span:hover{
+    color: #3376F6;
+}

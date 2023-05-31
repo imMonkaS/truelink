@@ -1,0 +1,63 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/groups.css">
+<link rel="stylesheet" href="/static/css/chats_style.css">
+<link rel="stylesheet" href="/static/css/profile_edit.css">
+<link rel="stylesheet" href="/static/css/friends.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+<main>
+	<div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+		<section class="main-content-section flex flex-dir-c al-items-c text-center">
+            <div class="main-group-content-friends">
+                <div class="music-container">
+                    <div class="people-cont">
+                        <div class="first-friend-info">
+                            <span>
+                                <span class = "text-default highlight">Пользователи: <span class="text-default" style="font-size: 15px"> (результатов: {{users|length}}) </span></span>
+                            </span>
+                        </div>
+                        {% if users|length != 0 %}
+                        {% for us in users %}
+                        <div class="search-item user-invite flex flex-direction-row al-items-c radius">
+                            <div class = "flex al-items-c">
+                                <a href="/id{{us.id}}">
+                                    <div class="user-img-invite img-small" style="background-image: url({{us.profile.pfp_link}})"></div>
+                                </a>
+                                <a href="/id{{us.id}}" class = "text-default invite-name">
+                                    <span>
+                                        <span>{{us.first_name}} {{us.last_name}}</span>
+                                    </span>
+                                </a>
+                            </div>
+                            <span class = "text-default" style = "margin: 0 5px 0 0;">
+                                <span>{% if us.profile.age_visible and us.profile.age != 0 %} Возраст: {{us.profile.age}} {% endif %}</span>
+                            </span>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="search-item user-invite flex flex-direction-row al-items-c">
+                            <div class = "flex al-items-c">
+                                <span style="margin-left: 50px" class = "text-default">
+                                    <span>Пользователей не найдено.</span>
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+		<div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+            </aside>
+        </div>
+        {% include 'static_templates/btn-up.html' %}
+	</div>
+</main>
+{% include 'static_templates/footer.html' %}

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+ :root {
+    /*--font-color: rgba(255 ,255 ,255, 0.6);*/
+    --font-color: rgba(255,255,255, 0.7);
+    --second-color: #3376F6;
+    --menu-windows: #1F2023;
+    /*--menu-windows: rgb(50, 50, 50);*/
+    --btn-elems: #2B2E34;
+    --bg: url("/static/images/bg/link_pattern_dark.png");
+    --borders: #27292D;
+    --like-borders: #BCBCBE;
+    --primary-color: #00005c;
+    --highlight-search: #f2f2f2 !important;
+    --var-elem: #383B40;
+    --check: invert(52%) sepia(23%) saturate(0%) hue-rotate(270deg) brightness(101%) contrast(77%);
+}
+
+[data-theme="dark"] {
+    --font-color: #3B3B3D;
+    /*--font-color: #383B40;*/
+    --second-color: rgb(128,128,128);
+    --menu-windows: #f5f8ff;
+    --btn-elems: #b0b5bf;
+    --bg: url("/static/images/bg/link-light-pattern.jpg");
+    --borders: #cccccc;
+    --like-borders: #e1e0e0;
+    --primary-color: #00005c;
+    --highlight-search: #000 !important;
+    --var-elem: #888;
+    --check: invert(79%) sepia(32%) saturate(208%) hue-rotate(183deg) brightness(103%) contrast(98%);
+}
+
+body {
+    background-color: var(--borders);
+    background: fixed var(--bg) repeat;
+    background-size: 5%;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow-x: hidden;
+    min-width: 930px;
+}
+
+.header {
+    width: 100%;
+    height: 60px;
+    background-size: cover;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--menu-windows);
+}
+
+.text-default {
+    color: var(--font-color);
+    white-space: nowrap;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+}

@@ -1,0 +1,258 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/group_solo.css">
+<link rel="stylesheet" href="/static/css/my_profile.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="ss main-content-section flex flex-direction-row text-center">
+            <div class="flex flex-dir-c">
+                <div class="photo-user main-content-user radius">
+                    <div class="gallery">
+                        <div style = "position: relative;">
+                            <a class="imgs images" href="{{user_on_page.profile.pfp_link}}">
+                                <img src="{{user_on_page.profile.pfp_link}}" alt="" class ="photo-user-block">
+                            </a>
+                            {% if user == user_on_page %}
+                            <div class="change-photo-user off-outline radius">
+                                <form method="post" id="pfp_form" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                    <span class="text-default">Изменить фотографию</span>
+                                    <input id="pfp_input" accept="image/*" type="file" name="pfp_pic">
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if user != user_on_page %}
+                        {% if not friend_added %}
+                        <a href="/id{{user_on_page.id}}/add_friend?next={{page_url}}/" class = "text-default">
+                            <div class="btn-add off-outline radius">
+                                <span class="text-default">Добавить в друзья</span>
+                            </div>
+                        </a>
+                        {% else %}
+                        <a href="/id{{user_on_page.id}}/remove_friend?next={{page_url}}/" class = "text-default">
+                            <div class="btn-add off-outline radius">
+                                <span class="text-default">Удалить из друзей</span>
+                            </div>
+                        </a>
+                        {% endif %}
+                        <a href="/messager?u={{user_on_page.id}}" class = "text-default">
+                            <div class="btn-add off-outline radius">
+                                <span class="text-default">Написать</span>
+                            </div>
+                        </a>
+                    {% endif %}
+                </div>
+                {% if user_on_page.profile.friends_visible or user == user_on_page %}
+                {% if friends_gr1|length != 0 %}
+                <div class="user-friends main-content-user radius">
+                    <a href="/id{{user_on_page.id}}/friends/" class="text-default button-cursor">
+                        <label class = "button-cursor">Друзья</label>
+                    </a>
+                    <div class="user-friends-icon">
+                        <div class="grone flex">
+                            {% for fr in friends_gr1 %}
+                            <div class="friend img-small" style="background-image: url({{fr.profile.pfp_link}})"> <a href="/id{{fr.id}}"></a></div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="grtwo flex">
+                            {% for fr in friends_gr2 %}
+                            <div class="friend img-small" style="background-image: url({{fr.profile.pfp_link}})"> <a href="/id{{fr.id}}"></a></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% elif user == user_on_page %}
+                <div class="main-content-user radius">
+                    <a href="/id{{user_on_page.id}}/friends/" class="text-default button-cursor">
+                        <label class = "button-cursor">Друзья</label>
+                    </a>
+                    <div class="text-default" style="margin: 15px 0 15px 0">
+                        У вас пока нет друзей
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+                <div class="user-activity main-content-user radius">
+                    <div class="user-servers">
+                        <a href="/id{{user_on_page.id}}/groups/" class="text-default button-cursor">
+                            <label class = "button-cursor">Группы</label>
+                        </a>
+                        {% if groups|length != 0 %}
+                        <div class="user-servers-block">
+                            <ul class="default-list">
+                                {% for gr in groups %}
+                                <li class="custom-block-li radius">
+                                    <a class="text-default" href="/groups/{{gr.id}}"> <span style="position: relative; top: 25%"> {{gr.name}} </span></a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% elif user_on_page == user %}
+                        <div class="text-default" style="margin: 15px 0 15px 0">
+                            У вас пока нет групп
+                        </div>
+                        {% else %}
+                        <div class="text-default" style="margin: 15px 0 15px 0">
+                            {{user_on_page.first_name}} <br> пока не состоит <br> ни в каких группах
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="group-two flex flex-dir-c">
+                <div class="user-info main-content-user radius">
+                    <div class="user-first-group text-default">
+                        <div class = "user-name highlight">{{user_on_page.first_name}} {% if user_on_page.profile.last_name_visible %} {{user_on_page.last_name}} {% endif %}</div>
+                        <div>online</div>
+                    </div>
+                    {% if user_on_page.profile.age_visible and user_on_page.profile.age != 0 and user_on_page.profile.about_me != '' or user == user_on_page %}
+                    <div class="user-second-group text-default">
+                        {% if user == user_on_page or user_on_page.profile.about_me != '' %}
+                        <div class="block">
+                            <span class = "edit_about">
+                                <span>
+                                    <span>О себе:</span>
+                                    {% if user == user_on_page %}
+                                    <span class = "edit_about_hide button-cursor">(ред.)</span>
+                                    {% endif %}
+                                </span>
+                                {% if user == user_on_page %}
+                                <form method="post" style = "position:relative;">
+                                    {% csrf_token %}
+                                    <textarea name="about_me" maxlength="200" style="min-height: 80px" placeholder="Расскажите о себе..." class="edit_about_ta" wrap = "hard" cols="15"> </textarea>
+                                    <span id="charCounts" class = "text-default"></span>
+                                    <button class="send-btn" id="about_me_sbm_btn" type="submit">
+                                        <i class="material-icons">send</i>
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </span>
+                            <span class = "block-text">{{user_on_page.profile.about_me}}</span>
+                        </div>
+                        {% endif %}
+                        {% if user_on_page.profile.age_visible and user_on_page.profile.age != 0 %}
+                        <div class="block">
+                            <span>Возраст:</span>
+                            <span class = "block-text">{{user_on_page.profile.age}} лет</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="user-third-group">
+                        <div class="block-short text-default control-block">
+
+                            <a class = "a-user-link text-default" href="/id{{user_on_page.id}}/friends/">
+                                <span class = "uniq-text-block">{% if user_on_page.profile.friends_visible or user == user_on_page %} {{friends_amount}} {% else %} 0 {% endif %}</span>
+                                <span class = "user-block-hover">Друзья</span>
+                            </a>
+                        </div>
+                        <div class="block-short text-default control-block">
+                            <a class = "a-user-link text-default" href="">
+                                <span class = "uniq-text-block">{{posts|length}}</span>
+                                <span class = "user-block-hover">Публикации</span>
+                            </a>
+                        </div>
+                        <div class="block-short text-default control-block">
+                            <a class = "a-user-link text-default" href="/id{{user_on_page.id}}/gallery">
+                                <span class = "uniq-text-block">{% if user_on_page.profile.gallery_visible or user == user_on_page %} {{images|length}} {% else %} 0 {% endif %}</span>
+                                <span class = "user-block-hover">Фотографии</span>
+                            </a>
+                        </div>
+                        <div class="block-short text-default control-block">
+                            <a class = "a-user-link text-default" href="/id{{user_on_page.id}}/groups/">
+                                <span class = "uniq-text-block">{% if user_on_page.profile.groups_visible or user == user_on_page %} {{groups|length}} {% else %} 0 {% endif %}</span>
+                                <span class = "user-block-hover">Группы</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-wall">
+
+                    {% if user_on_page == user %}
+                    {% include 'static_templates/form_for_posts.html' %}
+                    {% endif %}
+
+                    {% for post in posts %}
+                    <article class="main-user-article flex flex-dir-c radius" style = "height:auto;">
+                        <div class="group flex-direction-row flex">
+                            <a href="/id{{user_on_page.id}}" class = "groupPostHead">
+                                <div style="background-image: url({{post.user.profile.pfp_link}})" class="group-icon-def post-author-icon img-small">
+
+                                </div>
+                            </a>
+                            <div class="author-info flex flex-dir-c">
+                                <a class="text-default" href="/id{{user_on_page.id}}"> <span class="author-name text-default" style = "font-weight:900;">{{post.user.first_name}} {% if user_on_page.profile.last_name_visible %} {{post.user.last_name}} {% endif %}</span> </a>
+                                <span class="author-date">
+                                    <span class="author-time text-default">{{post.datetime}}</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="content-article flex flex-dir-c">
+                            <div class="box flex flex-dir-c" style="text-align: left">
+                                {% if post.text|length > 4 %}
+                                <p class = "text-default text-show-group p-text-group" style="margin-block-end: 0">
+                                    {% for line in post.text|slice:":4" %}{{line}}<br>{% endfor %}
+                                </p>
+                                <p class = "text-default text-show-group p-text-group more" style="margin-top: 0">
+                                    {% for line in post.text|slice:"4:" %}{{line}}<br>{% endfor %}
+                                </p>
+                                <label class = "btn-exp text-default showmemore is-active">Показать полностью</label>
+                                {% else %}
+                                <p class = "text-default text-show-group p-text-group" style="margin-block-end: 0">
+                                    {% for line in post.text %}{{line}}<br>{% endfor %} <br>
+                                </p>
+                                {% endif %}
+                            </div>
+                            {% if post.link_to_img != '' %}
+                            <img class="test" style = "width: 100%" src="{{post.link_to_img}}" alt=""> <!--Текст поста-->
+                            {% endif %}
+                        </div>
+
+                        <div class="groupPostMenu flex">
+                            <div id="cert" class="like-btn">
+                                <div id="{{post.id}}" class="like {% if user.id|slugify in post.liked_by %} heart-anim {% endif %}">
+                                    <i id="heart" class="fa fa-heart"></i>
+                                </div>
+                                <span class="text-default">{{post.likes}}</span>
+                            </div>
+
+                            {% if user == user_on_page or user.is_superuser %}
+                            <div class="like-btn" style="position: absolute; right: 25px">
+                                <a class="text-default" href="/id{{user_on_page.id}}/delete_post?post={{post.id}}"> <span class="text-default">Удалить пост</span> </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <aside class="flex flex-dir-c al-items-c text-center">
+        </aside>
+        {% include 'static_templates/btn-up.html' %}
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+<script src = "/static/js/gallery_open.js"></script>
+<script src = "/static/js/show_all.js"></script>
+<script src = "/static/js/like.js"> </script>
+<script src = "/static/js/edit_about.js"></script>
+<script src = "/static/js/counter_2000limit.js"></script>
+<script src = "/static/js/preview_img.js"></script>
+<script src = "/static/js/counter_100limit.js"></script>
+<script src = "/static/js/form_submit.js"></script>
+
+{% include 'static_templates/footer.html' %}

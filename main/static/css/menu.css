@@ -1,0 +1,109 @@
+/* Menu */
+
+.main-menu-ul {
+    top: 50px;
+    left: 10px;
+}
+
+.main-menu-li {
+    margin: 0;
+    padding: 0;
+    width: 140px;
+}
+
+.main-menu-icon {
+    width: 22px;
+    filter: var(--check);
+}
+
+.text-nav-menu-link {
+    transition: .1s;
+    border-radius: 5px;
+    width: 140px;
+    text-decoration: none;
+    padding: 5px 0 5px 5px;
+}
+
+.text-nav-menu-link:hover {
+    background-color: rgba(25, 35, 53, 0.7);
+}
+
+.text-nav-menu {
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+/* Intuitive menu */
+
+@keyframes bumble{
+    0%{
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(20deg);
+    }
+    75%{
+        transform: rotate(-40deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+}
+
+.intuitive-menu {
+    width: 50px;
+    transition: ease-out .71s;
+}
+
+.intuitive-menu-icon {
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: 0 0 5px 0;
+    transition-delay: .07s;
+    filter: var(--check);
+}
+
+.intuitive-menu-icon:hover {
+    filter: invert(53%) sepia(50%) saturate(7498%) hue-rotate(208deg) brightness(100%) contrast(94%);
+    animation: bumble .75s;
+}
+.int-settings{
+    width: 40px;
+    height: 40px;
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    filter: var(--check);
+}
+
+.int-settings:hover{
+    filter: invert(53%) sepia(50%) saturate(7498%) hue-rotate(208deg) brightness(100%) contrast(94%);
+    animation: bumble 0.75s;
+}
+
+.settings{
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+    transform: scale(0.8);
+    transition: .1s;
+}
+
+.settings:hover {
+    background-color: rgba(25, 35, 53, 0.7);
+}
+.settings span{
+    position: absolute;
+    bottom: 10px;
+    left: 36px;
+    font-size: 20px;
+}
+
+.animate{
+    transition: all ease-out .7s;
+}

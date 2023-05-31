@@ -1,0 +1,58 @@
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 55px;
+  right: 7.5px;
+}
+.theme-switch {
+  display: inline-block;
+  height: 26px;
+  position: relative;
+  width: 55px;
+}
+
+.theme-switch input {
+  display:none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+}
+
+.slider:before {
+  background-color: #fff;
+  background-image: url("/static/images/icons/moon.svg");
+  bottom: 2px;
+  content: "";
+  height: 22px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 22px;
+  background-position: center;
+}
+
+input:checked + .slider {
+  background-color: #3376F6;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+  background-image: url("/static/images/icons/sun.svg");
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

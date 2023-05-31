@@ -1,0 +1,106 @@
+{% if not isAnon %}
+<div id="menu">
+    <button class="c-hamburger c-hamburger-line">
+        <span>toggle menu</span>
+    </button>
+    <span class="text-default logo-text">TrueLink</span>
+    <ul class="main-menu-ul pos-abs default-list">
+        <li class="main-menu-li">
+            <a class="text-nav-menu-link flex al-items-c" href="/id{{user.id}}/">
+                <img class="main-menu-icon" src="/static/images/icons/photo_user.svg">
+                <span class="text-default text-nav-menu"> Моя страница </span>
+            </a>
+        </li>
+        <li class="main-menu-li">
+            <a class="text-nav-menu-link flex al-items-c" href="/feed/">
+                <img class="main-menu-icon" src="/static/images/icons/news.svg">
+                <span class="text-default text-nav-menu"> Новости </span>
+            </a>
+        </li>
+        <li class="main-menu-li">
+            <a class="text-nav-menu-link flex al-items-c" href="/messager/">
+                <img class="main-menu-icon" src="/static/images/icons/photo_chat.svg">
+                <span class="text-default text-nav-menu"> Чаты </span>
+            </a>
+        </li>
+        <li class="main-menu-li">
+            <a class="text-nav-menu-link flex al-items-c" href="/id{{user.id}}/friends/">
+                <img class="main-menu-icon" src="/static/images/icons/photo_friends.svg">
+                <span class="text-default text-nav-menu"> Друзья </span>
+            </a>
+        </li>
+        <li class="main-menu-li">
+            <a class="text-nav-menu-link flex al-items-c" href="/servers/">
+                <img class="main-menu-icon" src="/static/images/icons/photo_server.svg">
+                <span class="text-default text-nav-menu"> Сервера </span>
+            </a>
+        </li>
+        <li class="main-menu-li">
+            <a class="text-nav-menu-link flex al-items-c" href="/id{{user.id}}/groups/">
+                <img class="main-menu-icon" src="/static/images/icons/group.svg">
+                <span class="text-default text-nav-menu"> Группы </span>
+            </a>
+        </li>
+        <li class="main-menu-li">
+            <a class="text-nav-menu-link flex al-items-c" href="/id{{user.id}}/gallery">
+                <img class="main-menu-icon" src="/static/images/icons/photo_image.svg">
+                <span class="text-default text-nav-menu"> Фотографии </span>
+            </a>
+        </li>
+    </ul>
+    <div class="settings">
+        <a href="/id{{user.id}}/settings/">
+            <img src="/static/images/icons/settings.svg" style = "filter: var(--check);">
+            <span class="text-default text-nav-menu">Настройки</span>
+        </a>
+    </div>
+    <ul id="chmo" class="intuitive-menu default-list">
+        <li class="intuitive-menu-li">
+            <a href="/id{{user.id}}/">
+                <img class="intuitive-menu-icon" src="/static/images/icons/photo_user.svg">
+            </a>
+        </li>
+        <li class="intuitive-menu-li">
+            <a href="/feed/">
+                <img class="intuitive-menu-icon" src="/static/images/icons/news.svg">
+            </a>
+        </li>
+        <li class="intuitive-menu-li">
+            <a href="/messager/">
+                <img class="intuitive-menu-icon" src="/static/images/icons/photo_chat.svg">
+            </a>
+        </li>
+        <li class="intuitive-menu-li">
+            <a href="/id{{user.id}}/friends/">
+                <img class="intuitive-menu-icon" src="/static/images/icons/photo_friends.svg">
+            </a>
+        </li>
+        <li class="intuitive-menu-li">
+            <a href="/servers/">
+                <img class="intuitive-menu-icon" src="/static/images/icons/photo_server.svg">
+            </a>
+        </li>
+        <li class="intuitive-menu-li">
+            <a href="/id{{user.id}}/groups/">
+                <img class="intuitive-menu-icon" src="/static/images/icons/group.svg">
+            </a>
+        </li>
+        <li class="intuitive-menu-li">
+            <a href="/id{{user.id}}/gallery">
+                <img class="intuitive-menu-icon" src="/static/images/icons/photo_image.svg">
+            </a>
+        </li>
+    </ul>
+    <div id = "pidril" class="theme-switch-wrapper animate">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+        </label>
+    </div>
+    <div id="pid" class="int-settings">
+        <a href="/id{{user.id}}/settings/">
+            <img src="/static/images/icons/settings.svg">
+        </a>
+    </div>
+</div>
+{% endif %}

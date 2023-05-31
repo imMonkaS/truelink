@@ -1,0 +1,98 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/profile_edit.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="chat-content-section flex flex-dir-c al-items-c">
+			<div class="blockSettings">
+
+				<div class="settingMenu radius" style = "position: relative;">
+					<div class="settHead text-default highlight">
+						<span class="highlight">Приватность</span>
+					</div>
+					<form method="post">
+						{% csrf_token %}
+						<div class="option-field">
+							<span class="text-default">1. Видны ли друзья?</span>
+							<div class = "form-option-field flex flex-dir-c text-default">
+								<label>
+									<input type="checkbox" class="hidden" id="input7" {% if user.profile.friends_visible %} checked {% endif %} name="friends">
+									<label class="entry" for="input7">
+										<div class="circle"></div>
+										<div class="entry-label">Да</div>
+									</label>
+								</label>
+							</div>
+						</div>
+						<div class="option-field">
+							<span class="text-default">2. Видны ли группы?</span>
+							<div class = "form-option-field flex flex-dir-c text-default">
+								<label>
+									<input type="checkbox" class="hidden" id="input3" {% if user.profile.groups_visible %} checked {% endif %} name="groups">
+									<label class="entry" for="input3">
+										<div class="circle"></div>
+										<div class="entry-label">Да</div>
+									</label>
+								</label>
+							</div>
+						</div>
+						<div class="option-field">
+							<span class="text-default">3. Видна ли фамилия?</span>
+							<div class = "form-option-field flex flex-dir-c text-default">
+								<label>
+									<input type="checkbox" class="hidden" id="input5" {% if user.profile.last_name_visible %} checked {% endif %} name="last_name">
+									<label class="entry" for="input5">
+										<div class="circle"></div>
+										<div class="entry-label">Да</div>
+									</label>
+								</label>
+							</div>
+						</div>
+						<div class="option-field">
+							<span class="text-default">4. Виден ли возраст?</span>
+							<div class = "form-option-field flex flex-dir-c text-default">
+								<label>
+									<input type="checkbox" class="hidden" id="input4" {% if user.profile.age_visible %} checked {% endif %} name="age">
+									<label class="entry" for="input4">
+										<div class="circle"></div>
+										<div class="entry-label">Да</div>
+									</label>
+								</label>
+							</div>
+						</div>
+						<div class="option-field">
+							<span class="text-default">5. Видны ли фотографии?</span>
+							<div class = "form-option-field flex flex-dir-c text-default">
+								<label>
+									<input type="checkbox" class="hidden" id="input9" {% if user.profile.gallery_visible %} checked {% endif %} name="photo">
+									<label class="entry" for="input9">
+										<div class="circle"></div>
+										<div class="entry-label">Да</div>
+									</label>
+								</label>
+							</div>
+						</div>
+						<button class = "text-default sbm-btn radius">Сохранить</button>
+					</form>
+				</div>
+			</div>
+		</section>
+		<div class="right-content">
+			<aside class="flex flex-dir-c al-items-c text-center">
+				<div class="sidebar pos-abs radius">
+					{% include 'static_templates/sidebar_user_setting.html' %}
+				</div>
+			</aside>
+            </div>
+    </div>
+</main>
+
+{% include 'static_templates/footer.html' %}

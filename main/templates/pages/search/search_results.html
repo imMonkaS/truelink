@@ -1,0 +1,157 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/chats_style.css">
+<link rel="stylesheet" href="/static/css/profile_edit.css">
+<link rel="stylesheet" href="/static/css/friends.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+<main>
+	<div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+		<section class="main-content-section flex flex-dir-c al-items-c text-center">
+            <div class="main-group-content-friends">
+                <div class="music-container">
+                    <div class="people-cont">
+                        <div class="first-friend-info">
+                            <span>
+                                <span class = "text-default ssp">Пользователи: <span class="text-default" style="font-size: 15px"> (результатов: {{users_results}}) </span></span>
+                            </span>
+                            {% if users_results > 0 %}
+                            <a href="/more_people/?search={{search_request}}" class = "text-default">
+                                <div class="btn-add-new-server radius">Показать все</div>
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% if users|length != 0 %}
+                        {% for us in users %}
+                        <div class="search-item user-invite flex flex-direction-row al-items-c radius">
+                            <div class = "flex al-items-c">
+                                <a href="/id{{us.id}}">
+                                    <div class="user-img-invite img-small" style="background-image: url({{us.profile.pfp_link}})"></div>
+                                </a>
+                                <a href="/id{{us.id}}" class = "text-default invite-name">
+                                    <span>
+                                        <span>{{us.first_name}} {{us.last_name}}</span>
+                                    </span>
+                                </a>
+                            </div>
+                            <span class = "text-default" style = "margin: 0 5px 0 0;">
+                                <span>{% if us.profile.age_visible and us.profile.age != 0 %} Возраст: {{us.profile.age}} {% endif %}</span>
+                            </span>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="search-item user-invite flex flex-direction-row al-items-c radius">
+                            <div class = "flex al-items-c">
+                                <span style="margin-left: 50px" class = "text-default">
+                                    <span>Пользователей не найдено.</span>
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if not isAnon %}
+                    <div class="people-cont">
+                        <div class="first-friend-info">
+                            <span>
+                                <span class = "text-default ssp">Сервера: <span class="text-default" style="font-size: 15px"> (результатов: {{servers_results}}) </span></span>
+                            </span>
+                            {% if servers_results > 0 %}
+                            <a href="/more_servers/?search={{search_request}}" class = "text-default">
+                                <div class="btn-add-new-server radius">Показать все</div>
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% if servers|length != 0 %}
+                        {% for sr in servers %}
+                        <div class="search-item user-invite flex flex-direction-row al-items-c radius">
+                            <div class = "flex al-items-c">
+                                <a href="/servers/{{sr.server.id}}">
+                                    <div class="user-img-invite img-small" style="background-image: url({{sr.server.link_to_img}})"></div>
+                                </a>
+                                <a href="/servers/{{sr.server.id}}" class = "text-default invite-name">
+                                    <span>
+                                        <span>{{sr.server.name}}</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="search-item user-invite flex flex-direction-row al-items-c radius">
+                            <div class = "flex al-items-c">
+                                <span style="margin-left: 50px" class = "text-default">
+                                    <span>Серверов не найдено.</span>
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    <div class="people-cont">
+                        <div class="first-friend-info">
+                            <span>
+                                <span class = "text-default ssp">Группы: <span class="text-default" style="font-size: 15px"> (результатов: {{groups_results}}) </span></span>
+                            </span>
+                            {% if groups_results > 0 %}
+                            <a href="/more_groups/?search={{search_request}}" class = "text-default">
+                                <div class="btn-add-new-server radius">Показать все</div>
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% if groups|length != 0 %}
+                        {% for group in groups %}
+                        <div class="search-item user-invite flex flex-direction-row al-items-c radius">
+                            <div class = "flex al-items-c">
+                                <a href="/groups/{{group.id}}">
+                                    <div class="user-img-invite img-small" style="background-image: url({{group.link_to_img}})"></div>
+                                </a>
+                                <a href="/groups/{{group.id}}" class = "text-default invite-name">
+                                    <span>
+                                        <span>{{group.group_name}}</span>
+                                    </span>
+                                </a>
+                            </div>
+                            {% if group.follower %}
+                            <a class = "text-default button-cursor" style = "margin: 0 5px 0 0;">
+                                <span>Подписан</span>
+                            </a>
+                            {% elif group.wants_to_join %}
+                            <a class = "text-default button-cursor" style = "margin: 0 5px 0 0;">
+                                <span>Запрос отправлен</span>
+                            </a>
+                            {% else %}
+                            <a href = "/groups/{{group.id}}/follow?gr_id={{group.id}}/" class = "text-default button-cursor" style = "margin: 0 5px 0 0;">
+                                <span>Подписаться</span>
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="search-item user-invite flex flex-direction-row al-items-c radius">
+                            <div class = "flex al-items-c">
+                                <span style="margin-left: 50px" class = "text-default">
+                                    <span>Групп не найдено.</span>
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </section>
+		<div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+
+            </aside>
+        </div>
+	</div>
+</main>
+{% include 'static_templates/footer.html' %}

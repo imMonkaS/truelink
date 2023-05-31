@@ -1,0 +1,113 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/chats_style.css">
+<link rel="stylesheet" href="/static/css/friends.css">
+<link rel="stylesheet" href="/static/css/music.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    {% include 'static_templates/development_stage.html' %}
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="main-content-section flex flex-dir-c al-items-c text-center">
+            <div class="main-group-content-friends">
+                <div class="first-friend-info">
+                    <span>
+                        <span class = "text-default">Аудиозаписи</span>
+                        <span class = "text-info-con text-default">12</span>
+                    </span>
+                </div>
+                <div class="search text-default">
+                    <div class="search-icon">
+                        <img src="/static/images/icons/search.svg">
+                    </div>
+                    <form action="handler.php">
+                        <input class="search-field text-default" type="search" placeholder="Поиск...">
+                    </form>
+                </div>
+                <div style="display: block; margin-top: 10px">
+                    <div style="display: inline-flex; margin-right: 50px">
+                        <a class="text-default" href="/music/"> Моя музыка </a>
+                    </div>
+                    <div style="display: inline-flex">
+                        <a class="text-default" href="/music/all"> Все треки </a>
+                    </div>
+                </div>
+                <div class="music-container" id="music-container">
+                  <div class="music-info">
+                    <h4 id="title" class = "text-default"></h4>
+                    <div class="progress-container" id="progress-container">
+                      <div class="progress" id="progress"></div>
+                    </div>
+                  </div>
+
+                  <audio src="/static/music/ukulele.mp3" id="audio"></audio>
+                  <div class="flex">
+                      <div class="img-container">
+                        <img src="/static/images/ukulele.jpg" alt="music-cover" id="cover" />
+                      </div>
+                      <div class="navigation">
+                        <button id="prev" class="action-btn">
+                          <i class="fas fa-backward"></i>
+                        </button>
+                        <button id="play" class="action-btn action-btn-big">
+                          <i class="fas fa-play"></i>
+                        </button>
+                        <button id="next" class="action-btn">
+                          <i class="fas fa-forward"></i>
+                        </button>
+                      </div>
+                  </div>
+                </div>
+                <div class="music-container" id="music-container">
+                    <div class="music-info">
+                    <h4 id="title" class = "text-default"></h4>
+                    <div class="progress-container" id="progress-container">
+                      <div class="progress" id="progress"></div>
+                    </div>
+                  </div>
+
+                  <audio src="/static/music/ukulele.mp3" id="audio"></audio>
+                  <div class="flex">
+                      <div class="img-container">
+                        <img src="/static/images/ukulele.jpg" alt="music-cover" id="cover" />
+                      </div>
+                      <div class="navigation">
+                        <button id="play" class="action-btn action-btn-big">
+                          <i class="fas fa-play"></i>
+                        </button>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </section>
+        <div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+                <div class="sidebar pos-abs">
+
+                </div>
+            </aside>
+        </div>
+        {% include 'static_templates/btn-up.html' %}
+    </div>
+</main>
+
+<script>
+    'use strict'
+
+    document.querySelector('.search-field').onfocus = function(){
+        document.querySelector('.search').style.border = '#3376F6 solid 1px';
+    }
+
+    document.querySelector('.search-field').onblur = function(){
+        document.querySelector('.search').style = '';
+    }
+</script>
+<script src = "/static/js/music.js"></script>
+
+{% include 'static_templates/footer.html' %}

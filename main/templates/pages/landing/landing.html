@@ -1,0 +1,84 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/landing.css">
+<link rel="stylesheet" href="/static/css/hints.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="landing-page-forms">
+        <div class="login-user-form">
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" class="form-input" placeholder="Имя пользователя" pattern="^[A-Za-z0-9]+$" required maxlength="30" name="login_username"> <!-- Напиши здесь руглярку чтобы принимались и имена и мейлы (по мейлу тоже можно зайти) -->
+                <div style = "position:relative;">
+                    <input type="password" class="form-input pss-ch" placeholder="Пароль" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" required maxlength="50" name="login_password">
+                    <div class = "pos-abs" style = "right: 25px; top: 25px;">
+                        <label class = "text-default lbl-lan button-cursor"></label>
+                    </div>
+                </div>
+                <input type="submit" name="login_submit" value="Войти" class="login-submit-btn text-white text-bit-bigger">
+            </form>
+            <a href="/forgot_password/" class="text-default text-white"> Забыли пароль? </a>
+        </div>
+        <div class="register-user-form">
+            <p class="text-default" style="color: #f2f2f2; font-weight: 600;"> Нет аккаунта в TrueLink? </p>
+            <p class="text-default" style="font-size: 15px;"> Быстрая регистрация </p>
+            <form method="post">
+                {% csrf_token %}
+                <div class="on-focus clearfix" style="position: relative; padding: 0px;">
+                    <input type="text" class="form-input" placeholder="Никнейм" autocomplete="new-password" pattern="^[A-Za-z0-9]+$" required maxlength="30" name="username">
+                    <div class="tool-tip  slideIn right" style = "margin-top: -15px;">
+                        <span class="text-default" style = "white-space: normal;">Никнейм пользователя может состоять из <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">английских букв</span> и <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">цифр</span>.</span>
+                    </div>
+                </div>
+                <div class="on-focus clearfix" style="position: relative; padding: 0px;">
+                    <input type="text" class="form-input" placeholder="Ваше имя" pattern="(^[А-Яа-яЁё\s]+$)|(^[a-zA-Z]+$)" required maxlength="30" name="first_name">
+                    <div class="tool-tip  slideIn right" style = "margin-top: -15px;">
+                        <span class="text-default" style = "white-space: normal;">Имя пользователя может состоять из <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">Английских </span> и <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">русских</span> букв.</span>
+                    </div>
+                </div>
+                <div class="on-focus clearfix" style="position: relative; padding: 0px;">
+                    <input type="text" class="form-input" placeholder="Ваша фамилия" pattern="(^[А-Яа-яЁё\s]+$)|(^[a-zA-Z]+$)" required maxlength="30" name="last_name">
+                    <div class="tool-tip  slideIn right" style = "margin-top: -15px;">
+                        <span class="text-default" style = "white-space: normal;">Фамилия пользователя может состоять из <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">Английских </span> и <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">русских</span> букв.</span>
+                    </div>
+                </div>
+                <div class="on-focus clearfix" style="position: relative; padding: 0px;">
+                    <input type="text" class="form-input" id="contactsForm" placeholder="Email" pattern="^[A-Za-z0-9.@]+$" required maxlength="50" name="email">
+                    <div class="tool-tip  slideIn right" style = "margin-top: -15px;">
+                        <span class="text-default" style = "white-space: normal;">Почта пользователя может состоять из <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">Английских букв</span> и <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">цифр</span>.</span>
+                    </div>
+                </div>
+                <div class="on-focus clearfix" style="position: relative; padding: 0px;">
+                    <input type="password" class="form-input pss-ch" placeholder="Пароль" autocomplete="new-password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" required maxlength="50" name="password">
+                    <div class = "pos-abs" style = "right: 25px; top: 25px;">
+                        <label class = "text-default lbl-lan button-cursor"></label>
+                    </div>
+                    <div class="tool-tip  slideIn right" style = "height: 100px;margin-top:-40px">
+                        <span class="text-default" style = "white-space: normal;">Пароль пользователя должен состоять из:
+                            <br>
+                            <span class = "text-default" style = "color: #3376F6 !important;float: left;">- От восьми символов </span>
+                            <span class = "text-default" style = "color: #3376F6 !important;float: left;">- От одной заглавной буквы </span>
+                            <span class = "text-default" style = "color: #3376F6 !important;float: left;">- От одной строчной буквы </span>
+                            <span class = "text-default" style = "color: #3376F6 !important;float: left;">- От одной цифры </span>
+                        </span>
+                    </div>
+                </div>
+                <input type="submit" name="registration_submit" class="register-submit-btn text-white text-bit-bigger" value="Зарегистрироваться">
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script src="/static/js/show_pass.js"></script>
+<script>
+$(document).ready(function($){
+    $("#contactsForm").inputmask("email");
+});
+</script>
+
+{% include 'static_templates/footer.html' %}

@@ -1,0 +1,22 @@
+<div class="post-content flex flex-dir-c radius">
+    <form method="post" enctype="multipart/form-data" style = "position: relative;">
+        {% csrf_token %}
+        <textarea name="text" maxlength="2000" style="min-height: 80px;" required placeholder="Поделитесь своей новостью..." class="post-message-ta text-default" wrap = "hard" cols="15"> </textarea>
+        <span id="charCount" class = "text-default" style = "right: 30px;"></span>
+        <div class="group-post flex flex-dir-c">
+            <div class = "flex just-between" style = "margin: 10px 0 10px 0;">
+                <div class="example-1">
+                    <div class="form-group">
+                        <label class="label">
+                            <i class="material-icons">attach_file</i>
+                            <input id = "imag" name="post_img" type="file" accept="image/*" onchange="loadFile(event)">
+                        </label>
+                    </div>
+                </div>
+                <button id="postBtn" class="text-default radius">Опубликовать</button>
+            </div>
+            <img class = "output-img" id="output"/>
+            <input type="button" id="removeImage1" value="x" class="pos-abs btn-rmv1" />
+        </div>
+    </form>
+</div>

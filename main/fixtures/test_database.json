@@ -1,0 +1,173 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$SYSDCfXJ1p8E0oQwMYtr07$1Nn8Vo2lIOeHF+jquHTiCNLHiTyiRtPzWdioJAisosc=",
+        "last_login": "2021-05-30T08:10:26.119Z",
+        "is_superuser": false,
+        "username": "dan",
+        "first_name": "������",
+        "last_name": "������",
+        "email": "dan@asd.qwe",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-05-30T00:10:01.855Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$LQXYno39H8fSy4arsmBLBV$fddxNwm1ECeW9svSHny348y9qT7HjsrJOKyouz+Ed4M=",
+        "last_login": "2021-05-30T07:54:04.127Z",
+        "is_superuser": false,
+        "username": "daq",
+        "first_name": "Avgan",
+        "last_name": "Istan",
+        "email": "sad@cvx.ewr",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-05-30T07:54:03.859Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "main.message",
+    "pk": 1,
+    "fields": {
+        "sender": 1,
+        "receiver": 2,
+        "users": "1 2",
+        "message": "sdfdf",
+        "datetime": "2021-05-30T11:11:21.497Z"
+    }
+},
+{
+    "model": "main.message",
+    "pk": 2,
+    "fields": {
+        "sender": 1,
+        "receiver": 2,
+        "users": "1 2",
+        "message": "qweqweqwe",
+        "datetime": "2021-05-30T11:11:24.827Z"
+    }
+},
+{
+    "model": "main.message",
+    "pk": 3,
+    "fields": {
+        "sender": 1,
+        "receiver": 2,
+        "users": "1 2",
+        "message": "xcxcvxbcvb",
+        "datetime": "2021-05-30T11:11:26.382Z"
+    }
+},
+{
+    "model": "main.friend",
+    "pk": 1,
+    "fields": {
+        "current_user": 1,
+        "users": [
+            2
+        ]
+    }
+},
+{
+    "model": "main.friend",
+    "pk": 2,
+    "fields": {
+        "current_user": 2,
+        "users": []
+    }
+},
+{
+    "model": "main.profile",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "pfp_link": "/media/download.jpg",
+        "groups": "",
+        "groups_inv": "",
+        "servers": "1",
+        "servers_inv": "",
+        "black_list": "",
+        "posts_liked": "",
+        "group_posts_liked": "",
+        "age": 16,
+        "about_me": "",
+        "friends_visible": true,
+        "groups_visible": true,
+        "last_name_visible": true,
+        "age_visible": true,
+        "gallery_visible": true
+    }
+},
+{
+    "model": "main.profile",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "pfp_link": "/static/images/default_pfp.jpg",
+        "groups": "",
+        "groups_inv": "",
+        "servers": "",
+        "servers_inv": "",
+        "black_list": "",
+        "posts_liked": "",
+        "group_posts_liked": "",
+        "age": 0,
+        "about_me": "",
+        "friends_visible": true,
+        "groups_visible": true,
+        "last_name_visible": false,
+        "age_visible": false,
+        "gallery_visible": true
+    }
+},
+{
+    "model": "main.server",
+    "pk": 1,
+    "fields": {
+        "name": "PDDM",
+        "members": "1",
+        "invitations": "",
+        "bans": "",
+        "creator": 1,
+        "admins": "1",
+        "chats": "1",
+        "link_to_img": "/static/images/default_pfp.jpg",
+        "datetime": "2021-05-30T11:13:37.667Z",
+        "closed": false
+    }
+},
+{
+    "model": "main.group",
+    "pk": 1,
+    "fields": {
+        "name": "PDDM",
+        "members": "1",
+        "invitations": "",
+        "bans": "",
+        "creator": 1,
+        "admins": "1",
+        "link_to_img": "/static/images/default_pfp.jpg",
+        "datetime": "2021-05-30T11:13:37.667Z",
+        "visible": true
+    }
+},
+{
+    "model": "main.serverchat",
+    "pk": 1,
+    "fields": {
+        "name": "general",
+        "server": 1,
+        "datetime": "2021-05-30T11:13:37.776Z"
+    }
+}
+]

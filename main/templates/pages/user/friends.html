@@ -1,0 +1,105 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/chats_style.css">
+<link rel="stylesheet" href="/static/css/friends.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="main-content-section flex flex-dir-c al-items-c text-center">
+            <div class="main-group-content-friends">
+                <div class="first-friend-info">
+                    <span>
+                        <span class = "text-default highlight">Друзья</span>
+                        <span class = "text-info-con text-default">{% if user_on_page.profile.friends_visible or user_on_page == user %} {{friends_amount}} {% else %} ? {% endif %}</span>
+                    </span>
+                </div>
+                <div class="search text-default radius">
+                    <div class="search-icon">
+                        <img src="/static/images/icons/search.svg">
+                    </div>
+                    <form action="/friends/">
+                        <input class="search-field text-default" name="search" type="search" placeholder="Поиск...">
+                    </form>
+                </div>
+
+                <div class="friend-container">
+                    {% if user_on_page.profile.friends_visible or user_on_page == user %}
+                    {% if search_request is None %}
+                    {% for fr in friends %}
+                    <div class="friend radius">
+                        <div class="friend-image">
+                            <a href="/id{{fr.id}}">
+                                <img src="{{fr.profile.pfp_link}}" class="demoAva">
+                            </a>
+                        </div>
+                        <div class="friend-inter-group flex flex-dir-c">
+                            <span class="friend-name">
+                                <a class = "text-default link-friend" href="/id{{fr.id}}">{{fr.first_name}} {% if fr.profile.last_name_visible %} {{fr.last_name}} {% endif %}</a>
+                            </span>
+                            <span class="friend-action">
+                                <a class = "text-default link-friend" href="/messager?u={{fr.id}}">Написать сообщение</a>
+                            </span>
+                        </div>
+                        {% if fr in request_user_friends or user == user_on_page %}
+                        <div class="delete-friend flex">
+                            <a href="/id{{fr.id}}/remove_friend?next={{page_url}}/"> <button class = "delete-text text-default">Удалить из друзей</button> </a>
+                        </div>
+                        {% elif fr == user %}
+                        {% else %}
+                        <div class="delete-friend flex">
+                            <a href="/id{{fr.id}}/add_friend?next={{page_url}}/"> <button class = "delete-text text-default">Добавить в друзья</button> </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    {% for fr in friends_search %}
+                    <div class="friend radius">
+                        <div class="friend-image">
+                            <a href="/id{{fr.id}}">
+                                <img src="{{fr.profile.pfp_link}}" class="demoAva">
+                            </a>
+                        </div>
+                        <div class="friend-inter-group flex flex-dir-c">
+                            <span class="friend-name">
+                                <a class = "text-default link-friend" href="/id{{fr.id}}">{{fr.first_name}} {% if fr.profile.last_name_visible %} {{fr.last_name}} {% endif %}</a>
+                            </span>
+                            <span class="friend-action">
+                                <a class = "text-default link-friend" href="/messager?u={{fr.id}}">Написать сообщение</a>
+                            </span>
+                        </div>
+                        <div class="delete-friend flex">
+                            <a href="/id{{fr.id}}/remove_friend?next={{page_url}}/"> <button class = "delete-text text-default">Удалить из друзей</button> </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% else %}
+                    <div class = "flex just-cent al-items-c">
+                        <p class="text-default"> Друзья скрыты </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        <div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+                <div class="sidebar pos-abs" style = "display: none;">
+
+                </div>
+            </aside>
+        </div>
+        {% include 'static_templates/btn-up.html' %}
+    </div>
+</main>
+
+<script src = "/static/js/search_field_blur.js"></script>
+
+{% include 'static_templates/footer.html' %}

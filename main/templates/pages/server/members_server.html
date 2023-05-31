@@ -1,0 +1,116 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/chats_style.css">
+<link rel="stylesheet" href="/static/css/friends.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="main-content-section flex flex-dir-c al-items-c text-center">
+            <div class="main-group-content-friends">
+                <div class="first-friend-info">
+                    <span>
+                        <span class = "text-default highlight">Участники</span>
+                        <span class = "text-info-con text-default">{{members|length}}</span>
+                    </span>
+                </div>
+
+                <div class="search text-default radius">
+                    <div class="search-icon">
+                        <img src="/static/images/icons/search.svg">
+                    </div>
+                    <form action="/servers/{{server.id}}/members">
+                        <input class="search-field text-default" name="search" type="search" placeholder="Поиск...">
+                    </form>
+                </div>
+
+                <div class="friend-container">
+                    {% for member in members %}
+                    <div class="friend radius">
+                        <div class="friend-image">
+                            <a href="/id{{member.id}}">
+                                <img src="{{member.profile.pfp_link}}" class="demoAva">
+                            </a>
+                        </div>
+                        <div class="friend-inter-group flex flex-dir-c">
+                            <span class="friend-name">
+                                <a class = "text-default link-friend" href="/id{{member.id}}">{{member.first_name}} {% if member.profile.last_name_visible %} {{member.last_name}} {% endif %} {% if member == server.creator %} <span style="color: red">*</span> {% elif member.id|slugify in server.admins %} <span style="color: yellow">*</span> {% endif %}</a>
+                            </span>
+                        </div>
+                        {% if member != user and user == server.creator or user.id|slugify in server.admins and member.id|slugify not in server.admins %}
+                        <div>
+                            <i id = "open_menu" class="fas fa-ellipsis-h sf cursor">
+                                <ul class="context-menu" style="height: auto; min-height: 0">
+                                    <li class="context-menu__item" style="width: auto">
+                                      <a href="/servers/{{server.id}}/ban?u={{member.id}}" class="context-menu__link text-default button-cursor">
+                                        Заблокировать
+                                      </a>
+                                    </li>
+                                    <li class="context-menu__item" style="width: auto">
+                                      <a href="/servers/{{server.id}}/kick?u={{member.id}}" class="context-menu__link text-default button-cursor">
+                                         Исключить
+                                      </a>
+                                    </li>
+                                    {% if user == server.creator %}
+                                    <li class="context-menu__item" style="width: auto">
+                                      <a href="/servers/{{server.id}}/make_admin?u={{member.id}}" class="context-menu__link text-default button-cursor">
+                                        {% if member.id|slugify not in server.admins %} Сделать администратором {% else %} Сделать пользователем {% endif %}
+                                      </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    {% for banned_user in banned_users %}
+                    <div class="friend radius">
+                        <div class="friend-image">
+                            <a href="/id{{banned_user.id}}">
+                                <img src="{{banned_user.profile.pfp_link}}" class="demoAva">
+                            </a>
+                        </div>
+                        <div class="friend-inter-group flex flex-dir-c">
+                            <span class="friend-name">
+                                <a class = "text-default link-friend" href="/id{{banned_user.id}}">{{banned_user.first_name}} {% if banned_user.profile.last_name_visible %} {{banned_user.last_name}} {% endif %} (находится в чёрном списке)</a>
+                            </span>
+                        </div>
+                        {% if user == server.creator or user.is_superuser or user.id|slugify in server.admins %}
+                        <div>
+                            <i id = "open_menu" class="fas fa-ellipsis-h sf cursor">
+                                <ul class="context-menu" style="height: auto; min-height: 0">
+                                    <li class="context-menu__item" style="width: auto">
+                                      <a href="/servers/{{server.id}}/ban?u={{banned_user.id}}" class="context-menu__link text-default button-cursor">
+                                        Разблокировать
+                                      </a>
+                                    </li>
+                                </ul>
+                            </i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+            </aside>
+        </div>
+        {% include 'static_templates/btn-up.html' %}
+    </div>
+</main>
+
+
+<script src = "/static/js/context-menu.js"></script>
+<script src = "/static/js/search_field_blur.js"></script>
+
+{% include 'static_templates/footer.html' %}

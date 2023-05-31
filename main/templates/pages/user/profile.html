@@ -1,0 +1,156 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/profile_edit.css" xmlns: xmlns:>
+<link rel="stylesheet" href="/static/css/hints.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="chat-content-section flex flex-dir-c al-items-c">
+			<div class="blockSettings">
+				<div class="settingMenu radius">
+					<div class="settHead text-default">
+						<span class = "highlight">Профиль</span>
+					</div>
+					<div class="settMain">
+						<div class="sett">
+							<span class="settNameSett text-default">Пароль</span>
+							<form method="post">
+								{% csrf_token %}
+								<div class="settTextDiv flex" id="passwordSetting">
+									<div class = "flex flex-dir-c">
+										<input class = "radius" name="old_password" placeholder="Old password" type="password" style="background-color: #ccc; border: none; outline: none; margin-bottom: 5px;">
+										<div class="on-focus clearfix" style="position: relative; padding: 0px;display: table; float: left">
+											<input class = "radius" name="new_password" pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8, 50}$" placeholder="New password" type="password" style="background-color: #ccc; border: none; outline: none; margin-top: 5px;">
+											<div class="tool-tip  slideIn left" style = "height: 100px;margin-top:-50px">
+												<span class="text-default" style = "white-space: normal;">Пароль пользователя должен состоять из:
+													<br>
+													<span class = "text-default" style = "color: #3376F6 !important;float: left;">- От восьми символов </span>
+													<span class = "text-default" style = "color: #3376F6 !important;float: left;">- От одной заглавной буквы </span>
+													<span class = "text-default" style = "color: #3376F6 !important;float: left;">- От одной строчной буквы </span>
+													<span class = "text-default" style = "color: #3376F6 !important;float: left;">- От одной цифры </span>
+												</span>
+											</div>
+										</div>
+									</div>
+									<button class="text-default settTextBut profile-btn cursor">Изменить</button>
+								</div>
+							</form>
+						</div>
+						<div class="sett">
+							<form method="post">
+								{% csrf_token %}
+								<span class="text-default settNameSett">Электронная почта</span>
+								<div class="settTextDiv" id="emailSetting">
+<!--									placeholder="{{user.email}}"-->
+									<div class="on-focus clearfix" style="position: relative; padding: 0px;display: table; float: left">
+											<input id = "contactsForm" class = "radius" name="email" placeholder="{{user.email}}" type="text" style="background-color: #ccc; border: none; outline: none" maxlength="50">
+											<div class="tool-tip  slideIn left">
+												<span class="text-default" style = "white-space: normal;">Почта пользователя может состоять из <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">Английских букв</span> и <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">цифр</span>.</span>
+											</div>
+									</div>
+									<button class="text-default settTextBut profile-btn">Изменить</button>
+								</div>
+							</form>
+						</div>
+						<div class="sett">
+							<form method="post">
+								{% csrf_token %}
+								<span class="text-default settNameSett">Имя</span>
+								<div class="settTextDiv">
+									<div class="on-focus clearfix" style="position: relative; padding: 0px;display: table; float: left">
+										<input class = "radius" pattern = "(^[А-Яа-яЁё\s]+$)|(^[a-zA-Z]+$)" name="first_name" placeholder="{{user.first_name}}" type="text" style="background-color: #ccc; border: none; outline: none">
+										<div class="tool-tip  slideIn left">
+											<span class="text-default" style = "white-space: normal;">Имя пользователя может состоять из <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">Английских </span> и <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">русских</span> букв.</span>
+										</div>
+									</div>
+									<button class="text-default settTextBut profile-btn">Изменить</button>
+								</div>
+							</form>
+						</div>
+						<div class="sett">
+							<form method="post">
+								{% csrf_token %}
+								<span class="text-default settNameSett">Фамилия</span>
+								<div class="settTextDiv">
+									<div class="on-focus clearfix" style="position: relative; padding: 0px;display: table; float: left">
+										<input class = "radius" pattern = "(^[А-Яа-яЁё\s]+$)|(^[a-zA-Z]+$)" name="last_name" placeholder="{{user.last_name}}" type="text" style="background-color: #ccc; border: none; outline: none">
+										<div class="tool-tip  slideIn left">
+											<span class="text-default" style = "white-space: normal;">Фамилия пользователя может состоять из <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">Английских </span> и <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">русских</span> букв.</span>
+										</div>
+									</div>
+									<button class="text-default settTextBut profile-btn">Изменить</button>
+								</div>
+							</form>
+						</div>
+						<div class="sett">
+							<form method="post">
+								{% csrf_token %}
+								<span class="text-default settNameSett">Возраст</span>
+								<div class="settTextDiv">
+									<div class="on-focus clearfix" style="position: relative; padding: 0px;display: table; float: left">
+										<input class = "radius" pattern = "^[1-9]\d*$" name="age" placeholder="age" type="text" style="background-color: #ccc; border: none; outline: none">
+										<div class="tool-tip  slideIn left">
+											<span class="text-default" style = "white-space: normal;">Возраст пользователя может быть только <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">положительным числом</span>.</span>
+										</div>
+									</div>
+									<button class="text-default settTextBut profile-btn">Изменить</button>
+								</div>
+							</form>
+						</div>
+						<div class="sett">
+							<form method="post">
+								{% csrf_token %}
+								<span class="text-default settNameSett">Никнейм</span>
+								<div class="settTextDiv">
+									<div class="on-focus clearfix" style="position: relative; padding: 0px;display: table; float: left">
+										<input class = "radius" pattern="^[A-Za-z0-9]+$" name="username" placeholder="{{user.username}}" type="text" style="background-color: #ccc; border: none; outline: none">
+										<div class="tool-tip  slideIn left">
+											<span class="text-default" style = "white-space: normal;">Никнейм пользователя может состоять из <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">английских букв</span> и <span class = "text-default" style = "color: #3376F6 !important; white-space: normal;">цифр</span>.</span>
+										</div>
+									</div>
+									<button class="text-default settTextBut profile-btn">Изменить</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="settFoot">
+						<div class="demoProf radius">
+							<div class="mainFoot">
+								<div class="picAva">
+									<img src="{{user.profile.pfp_link}}" class="demoAva">
+								</div>
+								<div class="name" id = "NameValue">
+									<span class="text-default demoName" id="FirstName">{{user.first_name}}</span>
+									<span class="text-default demoName" id="LastName">{{user.last_name}}</span>
+								</div>
+							</div>
+							<div id="EditName" class="form-prevs"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="right-content">
+			<aside class="flex flex-dir-c al-items-c text-center">
+				<div class="sidebar pos-abs radius">
+					{% include 'static_templates/sidebar_user_setting.html' %}
+				</div>
+			</aside>
+		</div>
+    </div>
+</main>
+
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script>
+  $(document).ready(function($){
+    $("#contactsForm").inputmask("email")
+  });
+</script>
+{% include 'static_templates/footer.html' %}

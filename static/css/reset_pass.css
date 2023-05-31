@@ -1,0 +1,93 @@
+#sc-password {
+    width: 400px;
+    transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    background-color: #2B2E34;
+    border: 2px #3E424B solid;
+    height: 330px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sc-password h1 {
+    background: #3E424B;
+    width: 100%;
+    padding: 20px 0;
+    font-weight: 400;
+}
+
+div#sc-password .sc-container {
+    padding: 20px 10px;
+}
+
+div#sc-password input[type="email"], .text-in{
+    box-sizing: border-box;
+    width: 330px;
+    background: #fff;
+    margin: 0 0 10px 0 !important;
+    border: 2px solid #ccc;
+    padding: 10px 10px 10px 10px;
+    font-size: 100%;
+    outline: none;
+}
+
+
+div#sc-password input[type="text"]{
+    box-sizing: border-box;
+    width: 330px;
+    background: #fff;
+    margin: 0 0 10px 20px;
+    border: 2px solid #ccc;
+    padding: 10px 10px 10px 10px;
+    font-size: 100%;
+    outline: none;
+}
+
+.password{
+    box-sizing: border-box;
+    width: 330px;
+    background: #fff;
+    margin: 0 0 10px 20px;
+    border: 2px solid #ccc;
+    padding: 10px 10px 10px 10px;
+    font-size: 100%;
+    outline: none;
+}
+
+div#sc-password input[type="email"],
+div#sc-password input[type="text"],
+div#sc-password input[type="password"]:focus{
+    border: 2px #2288bb solid;
+}
+
+.button-string{
+    background: transparent;
+    outline: none;
+    border: 0;
+    font-size: 14px;
+    padding: 5px;
+    transition: .5s;
+}
+.button-string:hover{
+    color: #2288bb;
+}
+
+div#sc-password input[type="submit"] {
+    width: 330px;
+    background: #3E424B;
+    border: 0;
+    padding: 15px;
+    font-size: 100%;
+    transition: background .5s;
+    -webkit-transition: background .5s;
+    border: 2px #3E424B solid;
+}
+
+div#sc-password input[type="submit"]:hover {
+    background: #2288bb;
+}
+
+i{
+    color: #BCBCBE;
+}

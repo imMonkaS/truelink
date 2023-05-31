@@ -1,0 +1,96 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/profile_edit.css">
+<link rel="stylesheet" href="/static/css/chats_style.css">
+<link rel="stylesheet" href="/static/css/settings_group.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+    <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+        <section class="chat-content-section flex flex-dir-c al-items-c">
+			<div class="blockSettings">
+				<div class="settingMenu radius">
+					<div class="settHead text-default">
+						<span>Настройки группы</span>
+					</div>
+					<div class="settMain">
+                      <form method="post">
+                          {% csrf_token %}
+                        <div class="option-field">
+                            <span class="text-default">Изменить название группы:</span>
+                            <input style = "height: 28px;" name="name" class = "editValue radius" type="text" placeholder = "{{group.name}}">
+                        </div>
+                        <div class="option-field">
+                          <span class="text-default">Группа:</span>
+                          <div class = "flex flex-dir-c">
+                              <label>
+                              <input type="checkbox" class="hidden" id="input1" {% if not group.visible %} checked {% endif %} name="visible">
+                              <label class="entry" for="input1">
+                                  <div class="circle"></div>
+                                  <div class="entry-label text-default">Закрытая</div>
+                              </label>
+                              </label>
+                          </div>
+					    </div>
+                        {% if users_requests|length != 0 %}
+                        <div class="option-field">
+                            <span class="text-default">Эти пользователи хотят присоединится к группе:</span>
+                        </div>
+                        <div class="invite-list radius">
+                            <div style="display: inline-block"> <div class="text-default" style="margin: 5px 0 0 5px; display: inline-block">Принять выбранных пользователей</div> <input type="radio" name="request_mode" value="yes"> </div>
+                            <div style="display: inline-block"> <div class="text-default" style="margin: 5px 0 0 5px; display: inline-block">Отклонить выбранных пользователей</div> <input type="radio" name="request_mode" value="no"> </div>
+                            {% for req in users_requests %}
+                            <div class="user-invite flex flex-direction-row al-items-c radius">
+                                <div class = "flex al-items-c">
+                                    <a href="/id{{req.id}}">
+                                        <div class="user-img-invite img-small" style="background-image: url({{req.profile.pfp_link}})"></div>
+                                    </a>
+                                    <a href="" class = "text-default invite-name">
+                                        <span>
+                                            <span>{{req.first_name}} {{req.last_name}}</span>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "flex">
+                                    <input type="checkbox" value="{{req.id}}" style="width: 20px; height: 20px" name="requests">
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                          {% endif %}
+                          {% if user == group.creator %}
+                        <div><span class = "text-default del-btn" id = "del-btn-c" style="padding: 7px; border-radius: 5px">Удалить группу</span></div>
+                          {% endif %}
+                        <div>
+                            <a href="/groups/{{group.id}}/"> <div class = "sbm-btn text-default radius" style="right: 120px; text-align: center; font-size: 13px; line-height: 25px">Отмена</div> </a>
+                          <button class = "sbm-btn text-default radius" type="submit">Сохранить</button>
+                        </div>
+                      </form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="right-content">
+			<aside class="flex flex-dir-c al-items-c text-center">
+			</aside>
+		</div>
+    </div>
+    <div id = "confirm" class="confirm radius confirma" style = "display: none;">
+        <div class ="text-default highlight" style = "font-size: 14px; text-align: center; margin-top: 10px;">Вы уверены, что хотите удалить группу?</div>
+        <div class = "flex" style = "margin-bottom: 10px; justify-content: space-around;">
+            <a href="/groups/{{group.id}}/delete_group"><div class="sbm-btn-e text-default highlight radius">Да</div></a>
+            <a href="/groups/{{group.id}}/settings/"><div class="sbm-btn-e text-default highlight radius">Нет</div></a>
+        </div>
+    </div>
+    <div class="clear-elem"></div>
+</main>
+
+<script src = "/static/js/del_msg.js"></script>
+
+{% include 'static_templates/footer.html' %}

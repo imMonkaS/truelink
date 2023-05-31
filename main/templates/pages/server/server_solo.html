@@ -1,0 +1,231 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/chats_style.css">
+<link rel="stylesheet" href="/static/css/group_solo.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+
+<main>
+   <div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+		<section class="main-content-section flex flex-dir-c al-items-c text-center" style = "width: 900px">
+			<div class="groupHead radius" style = "width: 100%;">
+				<img src="{{server.link_to_img}}" alt="" class="groupHeadImg"> <!--Ава-->
+
+				<div class="author-info flex flex-dir-c">
+                        <span class="author-name text-default highlight" style = "font-weight: 900">{{server.name}}</span>
+                        <span class="author-date">
+                            <a href="/servers/{{server.id}}/members" class = "text-default">
+                                <span class = "text-default button-cursor">{{server.members|wordcount}} участников</span>
+                            </a>
+                        </span>
+                        {% if server.creator == user %}
+						<div class="change-photo-user off-outline">
+                            <form method="post" id="pfp_form" enctype="multipart/form-data">
+                            {% csrf_token %}
+                                <span class="text-default ss">Изменить фотографию</span>
+                                <input id="pfp_input" accept="image/*" type="file" name="pfp_pic">
+                            </form>
+                        </div>
+                        {% endif %}
+                        <span id="copier" style = "font-size: 11px;" class = "text-default button-cursor">ссылка для приглашения</span>
+				</div>
+                {% if user != server.creator %}
+                <a class="text-default" href="/servers/{{server.id}}/leave"> <div class="groupHeadDivSub text-default radius" style = "position: absolute; right: 5px; bottom: 5px;"> Покинуть сервер </div> </a>
+                {% endif %}
+
+                {% if server.creator == user %}
+				<div class="settings-group">
+					<a href="/servers/{{server.id}}/settings"><img src="/static/images/icons/settings.svg" style = "filter: var(--check);"></a>
+				</div>
+				{% endif %}
+			</div>
+            <div class="message-group">
+                <div class="mess-sub-group">
+                    <div class="listAllMessages">
+                        {% for chat in server_chats %}
+                        <div class="server-message-block">
+                            <a href="/servers/{{server.id}}?chat={{chat.id}}">
+                                <p style="padding-top: 0" class="allNamePeople text-default highlight">{{chat.name}}</p>
+                            </a>
+                        </div>
+                        {% endfor %}
+                        {% if server.creator_id == user.id %}
+                        <form id="create_chat_form" method="post">
+                            {% csrf_token %}
+                            <div class="server-message-block" style="background-color: #3376F6">
+                                <p id="form_btn" style="padding-top: 0; font-size: 15px" class="allNamePeople text-default highlight">Создать чат</p>
+                                <input type="text" class="server-create-chat-input text-default" name="name" placeholder="Название чата..." required>
+                            </div>
+                        </form>
+                        {% endif %}
+                    </div>
+
+                   <div class = "flex flex-dir-c">
+                        <div class="message-card al-items-c" style="border-top-right-radius: 5px; border-top-left-radius: 5px; text-align: center;">
+
+                            <p class="text-default highlight" style="font-size: 20px">
+                                {{current_chat.name}}
+                            </p>
+                        </div>
+                        <div class="message">
+                            <div class="messagesSends">
+                                {% for message in messages %}
+                                <div class="group-of-mess">
+                                    <a href="/id{{message.sender.id}}" class = "user-img">
+                                        <div class="user-imge img-small" style="background-image: url({{message.sender.profile.pfp_link}})">
+                                        </div>
+                                    </a>
+
+                                    <div class="peopleMes text-default">
+                                        <div class="message-user-type" style="text-align: left">
+                                            <a class="text-default" href="/id{{message.sender.id}}"> <h4 class="namePeople text-default highlight">{{message.sender.first_name}} {% if message.sender.last_name_visible %} {{message.sender.last_name}} {% endif %}</h4> </a> <span class="timeMess text-default">{{message.datetime}}</span>
+                                            <div class="messageSend text-default" style="margin-left: 0; text-align: left">{{message.message}}</div>
+                                        </div>
+                                        {% if user.id == message.sender.id %}
+                                        <a href="/delete_server_message/?message_id={{message.id}}"><span class="close" style = "right: -530px;"></span></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="sendMessInput">
+                    <form method="post" id="send_message_form">
+                        {% csrf_token %}
+                        <textarea data-emojiable="true" maxlength="2000" name="message" class="chat-message-ta post-message-ta" wrap = "hard" cols="15"> </textarea>
+                        <span id="charCount" class = "text-default"></span>
+                        <button class="send-btn" id="sbm_btn" type="submit">
+                            <i class="material-icons">send</i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+
+        </section>
+		<div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+                <div class="sidebar pos-abs ">
+                    <span class = "flex show-all-groups just-cent al-items-c radius" style="border-bottom: none; border-top: 2px solid var(--var-elem);"><a class = "text-default button-cursor" href="/servers/{{server.id}}/members">Участники</a></span>
+                    <div class="side-list-group">
+                        {% for member in members %}
+                        <div class="side-item">
+                            <div class = "flex al-items-c">
+                                <a href="/id{{member.id}}">
+                                    <div class="post-author-icon img-small special-post-icon" style="background-image: url({{member.profile.pfp_link}})"></div>
+                                </a>
+                                <a href="/id{{member.id}}" class = "text-default invite-name">
+                                    <span>
+                                        <span> {{member.first_name}} {% if member.profile.last_name_visible %} {{member.last_name}} {% endif %} {% if member.id == server.creator_id %}<span style="color:red">*</span> {% elif member.id|slugify in server.admins %} <span style="color:yellow">*</span> {% endif %} </span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </aside>
+        </div>
+       {% include 'static_templates/btn-up.html' %}
+   </div>
+</main>
+
+<script>
+    'use strict'
+
+    let chat_ta = document.querySelector('.chat-message-ta');
+    let chat_send_btn = document.querySelector('.send-btn');
+    chat_ta.value = '';
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    setInterval(onTimerTick, 33);
+    let tmp_message = -1;
+
+    function onTimerTick() {
+        $.ajax({
+            type: 'POST',
+            url: '/get_server_messages/',
+            mode: 'same-origin',
+            headers: {'X-CSRFToken': csrftoken},
+            success: function(response) {
+                let last_message = response['message']
+                if (tmp_message == -1){
+                    tmp_message = last_message['id']
+                }
+                if (last_message['id'] != tmp_message){
+                    if ({{server.id}} == last_message['server_id'] && last_message['chat_id'] == {{current_chat.id}}){
+                        tmp_message = last_message['id']
+                        $(".messagesSends").append(`
+                        <div class="group-of-mess">
+                            <div class="user-img img-small" style="background-image: url(${last_message['pfp_link']})">
+                            </div>
+
+                            <div class="peopleMes text-default">
+                                <div class="message-user-type" style="text-align: left">
+                                    <a class="text-default" href="/id{{message.sender.id}}"> <h4 class="namePeople text-default highlight">${last_message['sender_first_name']} ${last_message['sender_last_name']}</h4> </a> <span class="timeMess text-default">${last_message['datetime']}</span>
+                                    <div class="messageSend text-default" style="margin-left: 0; text-align: left">${last_message['message']}</div>
+                                </div>
+
+                                <a href="/delete_server_message/?message_id=${last_message['id']}"><span class="close" style = "right: -450px;" id="${last_message['id']}"></span></a>
+                            </div>
+                        </div>
+                        `)
+                        document.querySelector('.messagesSends').scrollTo(0, 9999);
+                    }
+                }
+            }
+        });
+    }
+
+    sbm_btn.onclick = function(e){
+        e.preventDefault()
+        var form = $("#send_message_form").serialize();
+        $.ajax({
+            type: "POST",
+            url: window.location.href,
+            data: form,
+            success: function(html){
+                chat_ta.value='';
+            }
+        });
+    }
+
+    form_btn.onclick = function(e){
+        create_chat_form.submit();
+    }
+
+    document.querySelector('.messagesSends').scrollTo(0, 9999);
+
+</script>
+<script src = "/static/js/change_btn_state.js"></script>
+<script src = "/static/js/chat_hotkeys.js"></script>
+<script src = "/static/js/show_sbm_btn.js"></script>
+<script src = "/static/js/copy_invite_link.js"></script>
+<script src = "/static/js/form_submit.js"></script>
+<script src = "/static/js/counter_2000limit.js"></script>
+
+{% include 'static_templates/footer.html' %}

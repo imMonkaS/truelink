@@ -1,0 +1,92 @@
+.landing-page-forms {
+    margin: 60px 0 0 100px;
+    width: 450px;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    display: block;
+}
+
+.login-user-form,
+.register-user-form {
+    text-align: center;
+    background: var(--menu-windows);
+    padding: 10px 30px 30px 30px;
+    border-radius: 10px;
+}
+
+.register-user-form {
+    margin-top: 100px;
+}
+
+.form-input {
+    margin-top: 20px;
+    margin-left: auto;
+    width: 350px;
+    height: 30px;
+    font-size: 20px;
+    background-color: #f2f2f2;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 0 15px 0 15px;
+}
+
+.form-input-with-text {
+    background: #3a3a3a;
+    color: #f2f2f2;
+}
+
+.form-input:focus,
+.form-input-with-text:focus {
+    border: #3376F6 solid 2px;
+    outline: none;
+    box-shadow: 0 0 15px rgba(57, 139, 234, 0.7);
+}
+
+.login-submit-btn {
+    width: 100px;
+    display: block;
+    margin: 20px 0 0 5px;
+}
+
+.register-submit-btn {
+    width: 220px;
+    margin-top: 20px;
+}
+
+.login-submit-btn,
+.register-submit-btn {
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background: #396ad8;
+    height: 30px;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.login-submit-btn:hover {
+    background-color: #2963e4;
+}
+
+.group-header {
+    transform: translate(85%);
+    position: absolute;
+    right: 10px;
+    left: inherit;
+}
+
+.lbl-lan{
+    display: block;
+    font-weight: 900;
+    user-select: none;
+    width: 20px;
+	height: 20px;
+    background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;
+}
+
+.lbl-lan.view {
+	background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
+}

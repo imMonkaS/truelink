@@ -1,0 +1,51 @@
+{% for post in posts %}
+<article class="main-content-article flex flex-dir-c radius" style = "height:auto; text-align: left">
+    <div class="group flex-direction-row flex">
+        <a class="text-default" href="/groups/{{post.group.id}}">
+            <div style="background-image: url({{post.group.link_to_img}})" class="group-icon-def post-author-icon img-small"></div>
+        </a>
+        <div class="author-info flex flex-dir-c">
+            <a class="text-default" href="/groups/{{post.group.id}}"><span class="author-name text-default" style = "font-weight: 900;">{{post.group.name}}</span> </a>
+            <span class="author-date">
+                <span class="author-time text-default">{{post.datetime}}</span>
+            </span>
+        </div>
+    </div>
+
+    <div class="content-article flex flex-dir-c">
+        <div class="box flex flex-dir-c" style="text-align: left">
+            {% if post.text|length > 4 %}
+            <p class = "text-default text-show-group p-text-group" style="margin-block-end: 0">
+                {% for line in post.text|slice:":4" %}{{line}}<br>{% endfor %}
+            </p>
+            <p class = "text-default text-show-group p-text-group more" style="margin-top: 0">
+                {% for line in post.text|slice:"4:" %}{{line}}<br>{% endfor %}
+            </p>
+            <label class = "btn-exp text-default showmemore is-active">Показать полностью</label>
+            {% else %}
+            <p class = "text-default text-show-group p-text-group">
+                {% for line in post.text %}{{line}}<br>{% endfor %} <br>
+            </p>
+            {% endif %}
+        </div>
+        {% if post.link_to_img != '' %}
+        <img style = "width: 100%" src="{{post.link_to_img}}" alt=""> <!--Текст поста-->
+        {% endif %}
+    </div>
+
+    <div class="groupPostMenu flex" style="position: relative">
+        <div id="cert" class="like-btn">
+            <div id="{{post.id}}" class="like {% if user.id|slugify in post.liked_by %} heart-anim {% endif %}">
+                <i id="heart" class="fa fa-heart"></i>
+            </div>
+            <span class="text-default">{{post.likes}}</span>
+        </div>
+
+        {% if user.id|slugify in post.group.admins or user.is_superuser or user.id == post.user.id %}
+        <div class="like-btn" style="position: absolute; right: 25px">
+            <a class="text-default" href="/groups/{{post.group.id}}/delete_post?post={{post.id}}"> <span class="text-default">Удалить пост</span> </a>
+        </div>
+        {% endif %}
+    </div>
+</article>
+{% endfor %}

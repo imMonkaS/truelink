@@ -1,0 +1,193 @@
+/* search bar */
+
+.search{
+    width: 700px;
+    height: 50px;
+    margin-top: 5px;
+    background-color: #2B2E34;
+    border: 1px #373A42 solid;
+    position: relative;
+}
+
+.search-icon{
+    position: absolute;
+    top: 11px;
+    left: 5px;
+}
+
+.search-field{
+    position: absolute;
+    top: 7px;
+    width: 400px;
+    height: 36px;
+    border: 0px;
+    left: 38px;
+    background-color: transparent;
+}
+
+.search-field:hover, .search-field:focus, .search-field:active{
+    outline:none;
+}
+
+/* messages*/
+
+.user-img{
+    width: 50px;
+    height: 50px;
+    display: block;
+    border-radius: 50%;
+    transition: .3s;
+    border: 1px solid #373A42;
+    margin: 10px -40px 0 10px;
+}
+.user-img:hover{
+    border: 1px solid #3376F6;
+}
+.last-message-time{
+    position: absolute;
+    font-size: 14px;
+    height: 14px;
+    top: 15px;
+    right: 5px;
+}
+
+.group-of-mess{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    align-items: flex-start;
+}
+.message-group{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+.mess-sub-group{
+    display: flex;
+    flex-direction: row;
+}
+
+.listAllMessages {
+	width: 200px;
+	height: 100%;
+	min-height: 200px;
+	max-height: 300px;
+}
+.divMessages {
+	width: 200px;
+	height: 80px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 0 0 5px;
+	background-color: #313131;
+    border: 1px solid #313131;
+    transition: .3s;
+    cursor: pointer;
+}
+.divMessages a{
+    display: block;
+    width: 193px;
+    height: 80px;
+    text-decoration: none;
+}
+
+.divMessages:hover{
+    background-color: rgba(25, 35, 53, 0.7);
+    border: 1px solid #3376F6;
+}
+.allNamePeople {
+	display: block;
+	font-size: 20px;
+	padding-top: 10px;
+}
+.allMessPeople {
+	display: block;
+    margin: 10px 0 0 0;
+	margin-top: 10px;
+	color: gray;
+	max-width: 300px;
+}
+.message {
+	display: inline-block;
+    position: relative;
+	margin-left: 5px;
+	top: 0px;
+	width: 495px;
+	height: 100%;
+	background-color: #313131;
+}
+.messagesSends {
+	overflow: auto;
+	width: 495px;
+	height: 100%;
+    margin-bottom: 15px;
+}
+.peopleMes {
+	width: 495px;
+	min-height: 80px;
+    position: relative;
+}
+.message-user-type{
+    position: absolute;
+    top: -12px;
+    left: 50px;
+}
+.namePeople {
+	color: gray;
+	display: inline-block;
+}
+.timeMess {
+	display: inline-block;
+	font-size: 12px;
+	margin-left: 10px;
+	color: #fff;
+}
+.messageSend {
+	display: block;
+}
+
+.txtas[contenteditable]:empty::before {
+    content: "Введите сообщение...";
+    background: none;
+}
+
+/* send message input*/
+
+.send-btn{
+    color: #BCBCBE;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: scale(1.2);
+    margin: 0 5px 5px 0px;
+    transition: .3s;
+    z-index: 2;
+}
+
+.send-btn:hover{
+    color: #3376F6;
+}
+
+.sendMessInput {
+	width: 71%;
+    margin: 0 0 0 204px;
+	min-height: 70px;
+	background-color: #202124;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.inputSend {
+	width: 100%;
+	min-height: 70px;
+    padding: 10px;
+    margin: 0 0 0 0;
+	background-color: transparent;
+    outline: none;
+    border-radius: 5px;
+}

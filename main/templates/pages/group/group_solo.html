@@ -1,0 +1,118 @@
+{% include 'static_templates/head_block_opened.html' %}
+{# Place for extra links #}
+<link rel="stylesheet" href="/static/css/group_solo.css">
+<link rel="stylesheet" href="/static/css/chats_style.css">
+<link rel="stylesheet" href="/static/css/friends.css">
+{# Место для дополнительных link (подключение css, js) #}
+{% include 'static_templates/head_block_closed.html' %}
+
+{% include 'static_templates/header.html' %}
+<main>
+	<div class="main-container-block flex just-cent">
+        <div class="left-content">
+            {% include 'static_templates/menu.html' %}
+        </div>
+		<section class="main-content-section flex flex-dir-c al-items-c text-center">
+			<div class="groupHead radius">
+				<img src="{{group.link_to_img}}" alt="" class="groupHeadImg"> <!--Ава-->
+
+				<div class="author-info flex flex-dir-c">
+                        <span class="author-name text-default" style = "font-weight: 900">{{group.name}}</span>
+                        <span class="author-date">
+                            <a class = "text-default" href="/groups/{{group.id}}/members"><span class="author-time text-default button-cursor">{{group.members|wordcount}} подписчиков</span></a>
+                        </span>
+						{% if group.creator == user %}
+						<div class="change-photo-user off-outline">
+                            <form method="post" id="pfp_form" enctype="multipart/form-data">
+                            {% csrf_token %}
+                                <span class="text-default ss">Изменить фотографию</span>
+                                <input id="pfp_input" accept="image/*" type="file" name="pfp_pic">
+                            </form>
+                        </div>
+						{% endif %}
+				</div>
+				{% if not user_is_member and not user_sent_inv and user.id|slugify not in group.bans %}
+				<a class="text-default" href="/groups/{{group.id}}/follow/"> <div class="groupHeadDivSub text-default radius" style = "position: absolute; right: 5px; bottom: 5px;">Подписаться</div> </a>
+                {% else %}
+				{% endif %}
+
+				{% if user_sent_inv %}
+				<a class="text-default" href="/groups/{{group.id}}/unfollow/"> <div class="groupHeadDivSub text-default radius" style = "position: absolute; right: 5px; bottom: 5px;">Запрос отправлен</div> </a>
+				{% endif %}
+
+				{% if user_is_member and group.creator != user %}
+				<a class="text-default" href="/groups/{{group.id}}/unfollow/"> <div class="groupHeadDivSub text-default radius" style = "position: absolute; right: 5px; bottom: 5px;">Отписаться</div> </a>
+				{% endif %}
+
+				{% if group.creator == user or user.id|slugify in group.admins %}
+				<div class="settings-group">
+					<a href="/groups/{{group.id}}/settings/"><img src="/static/images/icons/settings.svg" style = "filter: var(--check);"></a>
+				</div>
+				{% endif %}
+
+			</div>
+            {% if user.id|slugify not in group.bans %}
+			{% if group.visible or user.id|slugify in group.members %}
+			{% include 'static_templates/form_for_posts.html' %}
+
+            {% include 'static_templates/posts_loader.html' %}
+
+			{% endif %}
+            {% else %}
+            <div style="display: flex; align-content: center; justify-content: center">
+                <p class="text-default" style="color: red"> Эта группа добавила вас в чёрный список </p>
+            </div>
+            {% endif %}
+        </section>
+		<div class="right-content">
+            <aside class="flex flex-dir-c al-items-c text-center">
+                {% if user.id|slugify not in group.bans %}
+                <div class="sidebar pos-abs radius">
+                    <span class = "flex al-items-c show-all-groups just-cent" style="border-bottom: none"><a href="/groups/{{group.id}}/members" class = "text-default">Администраторы</a></span>
+                    <div class="side-list-group">
+                        {% for admin in admins %}
+                        <div class="side-item">
+                            <div class = "flex al-items-c">
+                                <a href="/id{{admin.id}}">
+                                    <div class="post-author-icon img-small special-post-icon" style="background-image: url({{admin.profile.pfp_link}})"></div>
+                                </a>
+                                <a href="/id{{admin.id}}" class = "text-default invite-name">
+                                    <span>
+                                        <span style="color: red"> {{admin.first_name}} {% if admin.profile.last_name_visible %} {{admin.last_name}} {% endif %}</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <span class = "flex al-items-c show-all-groups just-cent" style="border-bottom: none; border-top: 2px solid var(--var-elem);"><a href = "/groups/{{group.id}}/members" class = "text-default button-cursor">Подписчики</a></span>
+                    <div class="side-list-group">
+                        {% for member in members %}
+                        <div class="side-item">
+                            <div class = "flex al-items-c">
+                                <a href="/id{{member.id}}">
+                                    <div class="post-author-icon img-small special-post-icon" style="background-image: url({{member.profile.pfp_link}})"></div>
+                                </a>
+                                <a href="/id{{member.id}}" class = "text-default invite-name">
+                                    <span>
+                                        <span> {{member.first_name}} {% if member.profile.last_name_visible %} {{member.last_name}} {% endif %}</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </aside>
+        </div>
+        {% include 'static_templates/btn-up.html' %}
+	</div>
+</main>
+
+<script src = "/static/js/show_all.js"></script>
+<script src="/static/js/like.js"> </script>
+<script src = "/static/js/preview_img.js"></script>
+<script src = "/static/js/counter_2000limit.js"></script>
+<script src = "/static/js/form_submit.js"></script>
+{% include 'static_templates/footer.html' %}
