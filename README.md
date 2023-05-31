@@ -4,7 +4,8 @@
 # Installation
 1. Клонировать репозиторий;
 2. Открыть проект, установить requirements.txt через виртуальное окружение;
-3. Запустить manage.py с помощью параметра runserver.
+3. Сгенерировать секретный ключ в truelink/settings.py
+4. Запустить manage.py с помощью параметра runserver.
 
 # Development
 Python 3 Django 3.2
